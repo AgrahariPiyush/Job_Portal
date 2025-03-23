@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components{
+  ::-webkit-scrollbar{
+    width: 10px;
+    background-color: #132435;
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: whitesmoke;
+  }
+
+  /* body{
+    background: linear-gradient(to right, rgb(55, 65, 81), rgb(17, 24, 39), rgb(0, 0, 0));
+  } */
+}

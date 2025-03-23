@@ -1,0 +1,125 @@
+1)Create vite+React project using command and install tailwind library
+
+2)Tailwind -->className under tag declaration
+text-(color/wrap,justify,size)      size : in xl
+For height : h-20 
+To make center : flex items-center
+Width : w-full
+Padding : pl(padding left) pr(padding right)....py-3(padding top to bottom) 
+Font : font-bold/semibold
+Make bar rounded : rounded
+
+Tailwind-CSS Tips-->
+1)Padding 
+2)Margin : when need to leave space from top or bottm items
+3)To set items one after the other with custom gap : flex flex-col gap-5
+4)To make elements in center in div containg elements vertically : items-center
+5)To show div in center : justify center
+6)Use margin and padding for space manageemnt-->ie. py-10,px-10
+7)To manage space amoung items horizontally and put them in center : flex gap-4 justify center
+8)Stadard white background color :  bg-zinc-200
+9)Hover properteis :  hover:border-blue-400 ,translate-y-1,scale-105 (border,scaling,translate)
+10)To give button look : use border
+11)To make element containg link : use anchor tag
+
+
+3)To set background as layer --> Select layer from hypercolor.dev
+i)@layer base{ body{ background  }
+
+4)Arrow fun shortcut : rfce
+5)To make menu listdown bar : select tag with option value..
+i)standard css of bar/buttons : 'w-64 py-3 pl-4 bg-zinc-200 font-semibold rounded-md'
+
+6)Iteration in array :
+{skills.map((skill) => ( <p key={skill}>{skill}</p>  }
+
+7)Standard margin values for keeping cards in center : mx-40 mb-4
+
+8)To use custom data : 
+i)using props we will create data in dummy js file as export default
+ii)import in app.jsx
+
+9)Passing object data as props :
+i)map object js data to element {dummydata.map((job) => (
+          <JobCard key={job.id} {...job}/>
+        ))}
+ii)pass the props as argument in that element and replace hardcoded data with (props.object_data)
+
+
+Setting Up Firebase-->
+1)npm install firebase
+2)create firebase config file and store info..
+3)import firestore in firebase config  and initilasie it..const db = getFirestore();
+4)export it.
+5)create collection in database at firebase
+6)We will import database data online as arrays of object similiar to dummy data use
+
+Importing data
+1)import multiple commands library
+2)const [jobs, setJobs] = useState([]);
+
+  // Fetching data from Firebase
+  const fetchJobs = async () => {
+    const q = query(collection(db, "jobportal"));
+    const querySnapshot = await getDocs(q);
+    const jobList = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    setJobs(jobList);
+  };
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+3)Element should be under : {jobs.map((job) => (
+        <JobCard key={job.id} {...job} />
+      ))}
+
+4)COnvert the timestamp to date toDate() : by creating a new variable since it was timestamp earlier
+postedOn: doc.data().postedOn.toDate(),
+
+5)If day=1 then choose day not days : Use ternary operator
+Posted {diffInDays > 1 ? `${diffInDays} days`: `${diffInDays} day`}ago</p>
+
+6)Order the fetched data by posted latest day : Use ordering of firebase
+add  orderBy("postedOn", "desc")) where collection is called.
+
+
+
+Customly fetching data based upon filter option :
+
+1)create usestate for objects containing whise data is to be changed
+const [jobCriteria, setJobCriteria] = useState({
+      title:"",
+      location:"",
+      experience:"",
+      type:""
+  })
+2)add name and value in those elements for modifying data
+3)create function to handle changes: onChange
+onChange={handleChange}  add this to those elements
+4)Handle change function : 
+ const handleChange = (e) => {
+    setJobCriteria((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }));
+  };
+5)Set button for applying filter : for customlly fetching jobs : use where query in new async function
+6)now pass that new asycn funbction to search bar compoennt in the tag : fetchJobsCustom={fetchJobsCustom}
+7)Button eveent : add function in the button tag
+const search = async() => {
+           await props.fetchJobsCustom(jobCriteria)
+  }
+8)pass the props to searchbar
+
+
+
+
+
+
+
+
+                    
